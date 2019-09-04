@@ -1,11 +1,11 @@
-function checkVariableType(variable, variableName, expectedTypeName) {
+global.checkVariableType = function(variable, variableName, expectedTypeName) {
 	if (typeof expectedTypeName != 'string')
 		throw new Error('Invalid expectedTypeName ' + JSON.stringify(expectedTypeName))
 	else if (typeof variable !== expectedTypeName)
 		throw invalidVariableTypeError(variable, variableName, expectedTypeName)
 }
 
-function invalidVariableTypeError(variable, variableName, expectedTypeName) {
+global.invalidVariableTypeError = function(variable, variableName, expectedTypeName) {
 	if (typeof variableName != 'string')
 		if (typeof expectedTypeName != 'string')
 			return new Error(
