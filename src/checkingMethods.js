@@ -1,6 +1,6 @@
 global.checkGlobalNameIsOccupied = function(...namesToCheck) {
 	for (var i = 0; i < namesToCheck.length; i++)
-		if (global.hasOwnProperty(namesToCheck[i]))
+		if (namesToCheck[i] in global)
 			throw new Error('global ' + namesToCheck[i] + ' is ocupied')
 }
 
@@ -16,7 +16,7 @@ global.checkIsEmptyString = function(variableToCheck, variableName) {
 global.checkObjectHasProperty = function(objectToCheck, propertyName) {
 	checkVariableType(propertyName, 'propertyName', 'string')
 	checkVariableType(objectToCheck, 'objectToCheck', 'object')
-	if (!objectToCheck.hasOwnProperty(propertyName))
+	if (!(propertyName in objectToCheck))
         throw new Error(propertyName + ' is undefined')
 }
 
