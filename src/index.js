@@ -1,2 +1,3 @@
-require('./helperMethods')
-require('./errorHelperMethods')
+require('./checkingMethods')
+require('./errorMethods')
+require('./stringMethods')

@@ -1,3 +1,5 @@
+checkGlobalNameIsOccupied('isEmptyString')
+
 global.isEmptyString = function(text) {
 	if (text === null)
 		return true
