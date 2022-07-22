@@ -1,0 +1,15 @@
+{
+    "type": "test-template3",
+    "data": {
+        "title": "title",
+        "links": [
+            {
+                "type": "agency-navigation-link",
+                "data": {
+                    "url": "links.url",
+                    "content": "links.content"
+                }
+            }
+        ]
+    }
+}

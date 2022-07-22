@@ -1,0 +1,87 @@
+{
+    "type": "agency-landing-page",
+    "data": {
+        "navbar_section": {
+            "file_path": "navbar.json",
+            "params": {
+                "title": "agency",
+                "links": [
+                    {
+                        "url": "#about",
+                        "content": "About"
+                    },
+                    {
+                        "url": "#projects",
+                        "content": "Projects"
+                    },
+                    {
+                        "url": "#signup",
+                        "content": "Signup"
+                    }
+                ]
+            }
+        },
+        "header_section": {
+            "file_path": "header.json",
+            "params": {
+                "title": "agency",
+                "content": "content safdasdf"
+            }
+        },
+        "content_sections": [
+            {
+                "file_path": "agencyServices.json",
+                "params": {
+                    "title": "agency",
+                    "content": "content safdasdf",
+                    "texts": [
+                        {
+                            "icon_class": "fas fa-shopping-cart fa-stack-1x fa-inverse",
+                            "title": "E-Commerce",
+                            "content": "Lorem ipsum dolor sit amet consectetur."
+                        },
+                        {
+                            "icon_class": "fas fa-laptop fa-stack-1x fa-inverse",
+                            "title": "E-Commerce",
+                            "content": "Lorem ipsum dolor sit amet consectetur."
+                        }
+                    ]
+                }
+            }
+        ],
+        "contact_section": {
+            "type": "agency-contact-form",
+            "data": {
+
+            }
+        },
+        "footer_section": {
+            "file_path": "footer.json",
+            "params": {
+                "icons": [
+                    {
+                        "url": "",
+                        "icon_class": "fab fa-twitter"
+                    },
+                    {
+                        "url": "",
+                        "icon_class": "fab fa-facebook-f"
+                    },
+                    {
+                        "url": "",
+                        "icon_class": "fab fa-linkedin-in"
+                    }
+                ],
+                "termsOfUse": {
+                    "url": "",
+                    "content": "Terms of use"
+                },
+                "privacyPolicy": {
+                    "url": "",
+                    "content": "Privacy policy"
+                },
+                "copyright": "Copyright"
+            }
+        }
+    }
+}

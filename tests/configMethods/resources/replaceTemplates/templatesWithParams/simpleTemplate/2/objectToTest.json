@@ -1,0 +1,14 @@
+{
+  "template": {
+    "file_path": "template.json",
+    "params": {
+      "title": "test title",
+      "content": "test content",
+      "text": {
+        "iconClass": "test icon",
+        "title": "test title",
+        "content": "test content"
+      }
+    }
+  }
+}

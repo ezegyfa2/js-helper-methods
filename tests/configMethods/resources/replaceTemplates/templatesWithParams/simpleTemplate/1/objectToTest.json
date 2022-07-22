@@ -1,0 +1,9 @@
+{
+  "template": {
+    "file_path": "template.json",
+    "params": {
+      "title": "test title",
+      "content": "test content"
+    }
+  }
+}

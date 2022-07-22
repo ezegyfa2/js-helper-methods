@@ -1,0 +1,14 @@
+{
+  "template1": {
+    "file_path": "template.json"
+  },
+  "template2": {
+    "file_path": "template2.json"
+  },
+  "template3": {
+    "file_path": "template3.json"
+  },
+  "template4": {
+    "file_path": "template4.json"
+  }
+}

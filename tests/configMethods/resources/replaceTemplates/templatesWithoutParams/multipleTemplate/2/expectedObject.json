@@ -1,0 +1,95 @@
+{
+  "template1": {
+    "type": "test-template",
+    "data": {
+      "title_section": {
+        "type": "agency-medium-text-content",
+        "data": {
+          "title": "title",
+          "content": "content"
+        }
+      },
+      "text_content_sections": [
+        {
+          "type": "agency-text-content-with-icon",
+          "data": {
+            "icon_class": "texts.iconClass",
+            "title": "texts.title",
+            "content": "texts.content"
+          }
+        }
+      ]
+    }
+  },
+  "template2": {
+    "type": "test-template2",
+    "data": {
+      "icon_links_section": {
+        "type": "wertically-icon-links",
+        "data": {
+          "icon_sections": [
+            {
+              "type": "button-icon-link2",
+              "data": {
+                "url": "icons.url",
+                "icon_class": "icons.class"
+              }
+            }
+          ]
+        }
+      },
+      "terms_of_use_section": {
+        "type": "dark-link",
+        "data": {
+          "url": "termsOfUse.url",
+          "content": "termsOfUse.content"
+        }
+      },
+      "privacy_policy_section": {
+        "type": "dark-link",
+        "data": {
+          "url": "privacyPolicy.url",
+          "content": "privacyPolicyUrl.content",
+          "added_classes": {
+            "root": "me-3"
+          }
+        }
+      },
+      "copyright": "copyright"
+    }
+  },
+  "template3": {
+    "type": "test-template3",
+    "data": {
+      "title": "title",
+      "links": [
+        {
+          "type": "agency-navigation-link",
+          "data": {
+            "url": "links.url",
+            "content": "links.content"
+          }
+        }
+      ]
+    }
+  },
+  "template4": {
+    "type": "test-template4",
+    "data": {
+      "title_section": {
+        "type": "agency-large-text-content",
+        "data": {
+          "title": "title",
+          "content": "content",
+          "color": "white",
+          "added_classes": {
+            ".content": [
+              "mt-2",
+              "mb-5"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

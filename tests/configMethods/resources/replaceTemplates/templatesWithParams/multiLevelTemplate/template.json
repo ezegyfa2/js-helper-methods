@@ -1,0 +1,37 @@
+{
+    "type": "test-template",
+    "data": {
+        "template_section": {
+            "file_path": "template2.json",
+            "params": {
+                "icons": {
+                    "class": "++template2_icon_class",
+                    "url": "++template2_icon_url"
+                },
+                "termsOfUse": {
+                    "url": "++template2_termsOfUse_url",
+                    "content": "++template2_termsOfUse_url_content"
+                },
+                "template3_test_icon": "++template3_test_icon",
+                "template3_copyright": "++template3_copyright"
+            }
+        },
+        "title_section": {
+            "type": "agency-medium-text-content",
+            "data": {
+                "title": "++title",
+                "content": "++content"
+            }
+        },
+        "text_content_sections": [
+            {
+                "type": "agency-text-content-with-icon",
+                "data": {
+                    "icon_class": "texts.iconClass",
+                    "title": "texts.title",
+                    "content": "texts.content"
+                }
+            }
+        ]
+    }
+}

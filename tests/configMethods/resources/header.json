@@ -1,0 +1,19 @@
+{
+    "type": "agency-header",
+    "data": {
+        "title_section": {
+            "type": "agency-large-text-content",
+            "data": {
+                "title": "++title",
+                "content": "++content",
+                "color": "white",
+                "added_classes": {
+                    ".content": [
+                        "mt-2",
+                        "mb-5"
+                    ]
+                }
+            }
+        }
+    }
+}

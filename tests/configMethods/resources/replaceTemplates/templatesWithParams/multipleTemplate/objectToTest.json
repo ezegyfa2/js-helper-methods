@@ -1,0 +1,38 @@
+{
+  "template1": {
+    "file_path": "template.json",
+    "params": {
+      "title": "test title",
+      "content": "test content",
+      "text": {
+        "iconClass": "test icon",
+        "title": "test title",
+        "content": "test content"
+      }
+    }
+  },
+  "template2": {
+    "file_path": "template.json",
+    "params": {
+      "title": "test title",
+      "content": "test content",
+      "text": {
+        "iconClass": "test icon",
+        "title": "test title",
+        "content": "test content"
+      }
+    }
+  },
+  "template3": {
+    "file_path": "template.json",
+    "params": {
+      "title": "test title",
+      "content": "test content",
+      "text": {
+        "iconClass": "test icon",
+        "title": "test title",
+        "content": "test content"
+      }
+    }
+  }
+}

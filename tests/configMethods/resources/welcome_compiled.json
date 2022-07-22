@@ -1,0 +1,104 @@
+{
+    "type": "agency-landing-page",
+    "data": {
+        "navbar_section": {
+            "type": "agency-navigation-bar",
+            "data": {
+                "title": "agency",
+                "links": [
+                    {
+                        "type": "agency-navigation-link",
+                        "data": {
+                            "url": "++links.url",
+                            "content": "++links.content"
+                        }
+                    }
+                ]
+            }
+        },
+        "header_section": {
+            "type": "agency-header",
+            "data": {
+                "title_section": {
+                    "type": "agency-large-text-content",
+                    "data": {
+                        "title": "agency",
+                        "content": "content safdasdf",
+                        "color": "white",
+                        "added_classes": {
+                            ".content": [
+                                "mt-2",
+                                "mb-5"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "content_sections": [
+            {
+                "type": "agency-services",
+                "data": {
+                    "title_section": {
+                        "type": "agency-medium-text-content",
+                        "data": {
+                            "title": "agency",
+                            "content": "content safdasdf"
+                        }
+                    },
+                    "text_content_sections": [
+                        {
+                            "type": "agency-text-content-with-icon",
+                            "data": {
+                                "icon_class": "++texts.iconClass",
+                                "title": "++texts.title",
+                                "content": "++texts.content"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "contact_section": {
+            "type": "agency-contact-form",
+            "data": {}
+        },
+        "footer_section": {
+            "type": "agency-footer",
+            "data": {
+                "icon_links_section": {
+                    "type": "wertically-icon-links",
+                    "data": {
+                        "icon_sections": [
+                            {
+                                "type": "button-icon-link2",
+                                "data": {
+                                    "url": "icons.url",
+                                    "icon_class": "icons.class"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "terms_of_use_section": {
+                    "type": "dark-link",
+                    "data": {
+                        "url": "",
+                        "content": "Terms of use"
+                    }
+                },
+                "privacy_policy_section": {
+                    "type": "dark-link",
+                    "data": {
+                        "url": "",
+                        "content": "++privacyPolicyUrl.content",
+                        "added_classes": {
+                            "root": "me-3"
+                        }
+                    }
+                },
+                "copyright": "Copyright"
+            }
+        }
+    }
+}

@@ -1,0 +1,68 @@
+{
+  "template1": {
+    "type": "test-template",
+    "data": {
+      "title_section": {
+        "type": "agency-medium-text-content",
+        "data": {
+          "title": "test title",
+          "content": "test content"
+        }
+      },
+      "text_content_sections": [
+        {
+          "type": "agency-text-content-with-icon",
+          "data": {
+            "icon_class": "test icon",
+            "title": "test title",
+            "content": "test content"
+          }
+        }
+      ]
+    }
+  },
+  "template2": {
+    "type": "test-template",
+    "data": {
+      "title_section": {
+        "type": "agency-medium-text-content",
+        "data": {
+          "title": "test title",
+          "content": "test content"
+        }
+      },
+      "text_content_sections": [
+        {
+          "type": "agency-text-content-with-icon",
+          "data": {
+            "icon_class": "test icon",
+            "title": "test title",
+            "content": "test content"
+          }
+        }
+      ]
+    }
+  },
+  "template3": {
+    "type": "test-template",
+    "data": {
+      "title_section": {
+        "type": "agency-medium-text-content",
+        "data": {
+          "title": "test title",
+          "content": "test content"
+        }
+      },
+      "text_content_sections": [
+        {
+          "type": "agency-text-content-with-icon",
+          "data": {
+            "icon_class": "test icon",
+            "title": "test title",
+            "content": "test content"
+          }
+        }
+      ]
+    }
+  }
+}

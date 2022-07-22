@@ -1,0 +1,22 @@
+{
+    "type": "test-template",
+    "data": {
+        "title_section": {
+            "type": "agency-medium-text-content",
+            "data": {
+                "title": "++title",
+                "content": "++content"
+            }
+        },
+        "text_content_sections": [
+            {
+                "type": "agency-text-content-with-icon",
+                "data": {
+                    "icon_class": "++text.iconClass",
+                    "title": "++text.title",
+                    "content": "++text.content"
+                }
+            }
+        ]
+    }
+}

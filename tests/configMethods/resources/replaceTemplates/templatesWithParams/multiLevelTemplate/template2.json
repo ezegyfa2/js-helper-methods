@@ -1,0 +1,44 @@
+{
+    "type": "test-template2",
+    "data": {
+        "template_section": {
+            "file_path": "template3.json",
+            "params": {
+                "icons": "++template3_test_icon",
+                "copyright": "++template3_copyright"
+            }
+        },
+        "icon_links_section": {
+            "type": "wertically-icon-links",
+            "data": {
+                "icon_sections": [
+                    {
+                        "type": "button-icon-link2",
+                        "data": {
+                            "url": "++icons.url",
+                            "icon_class": "++icons.class"
+                        }
+                    }
+                ]
+            }
+        },
+        "terms_of_use_section": {
+            "type": "dark-link",
+            "data": {
+                "url": "++termsOfUse.url",
+                "content": "++termsOfUse.content"
+            }
+        },
+        "privacy_policy_section": {
+            "type": "dark-link",
+            "data": {
+                "url": "privacyPolicy.url",
+                "content": "privacyPolicyUrl.content",
+                "added_classes": {
+                    "root": "me-3"
+                }
+            }
+        },
+        "copyright": "copyright"
+    }
+}

@@ -26,3 +26,4 @@ global.checkVariableType = function(variableToCheck, variableName, expectedTypeN
 	else if (typeof variableToCheck !== expectedTypeName)
 		throw invalidVariableTypeError(variableToCheck, variableName, expectedTypeName)
 }
+

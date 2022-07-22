@@ -1,0 +1,18 @@
+{
+  "template": {
+    "file_path": "template.json",
+    "params": {
+      "title": "test title 1",
+      "content": "test content 1",
+      "template2_icon_class": "test icon 2",
+      "template2_icon_url": "test url 2",
+      "template2_termsOfUse_url": "test term of use url 2",
+      "template2_termsOfUse_url_content": "test term of use content 2",
+      "template3_test_icon": {
+        "class": "test icon class 3",
+        "url": "test url 3"
+      },
+      "template3_copyright": "test copyright 3"
+    }
+  }
+}
