@@ -53,7 +53,7 @@ global.getObjectSubProperty = function(parent, propertyPath, defaultValue) {
     let propertyNames = propertyPath.split('.')
     let property = parent
     for (const propertyName of propertyNames) {
-        if (propertyName in property) {
+        if (property && propertyName in property) {
             property = property[propertyName]
         }
         else {
@@ -73,4 +73,21 @@ global.convertToPHPObject = function(objectToConvert) {
     json = replaceAll(json,'{', '(object) [')
     json = replaceAll(json,'}', ']')
     return json
+}
+
+global.getType = name => {
+    switch (name) {
+        case 'String':
+            return String
+        case 'Boolean':
+            return Boolean
+        case 'Number':
+            return Number
+        case 'Object':
+            return Object
+        case 'Function':
+            return Function
+        default:
+            throw new Error('Invalid type name: ' + name)
+    }
 }

@@ -1,167 +1,115 @@
-require('./objectMethods')
-const fs = require('fs')
-const path = require('path')
-
-global.addIdToConfigArrays = function(config) {
-    for (const [key, value] of Object.entries(config)) {
-        if (typeof(value) == 'object') {
-            if (Array.isArray(value)) {
-                //value
-            }
-            else {
-                addIdToConfigArrays(value)
-            }
-        }
-    }
-}
-
-global.replaceConfigFileTemplates = function(configFilePath) {
-    let configFolderPath = path.dirname(configFilePath)
-    let compliedConfig = getReplacedConfigTemplate(configFilePath)
-    let compiledConfigFilePath = configFolderPath + '\\' + path.basename(configFilePath, path.extname(configFilePath)) + '_compiled'
-        + path.extname(configFilePath)
-    fs.writeFileSync(compiledConfigFilePath, JSON.stringify(compliedConfig, null, 4))
-}
-
-global.getReplacedConfigTemplate = function(configFilePath) {
-    let configFolderPath = path.dirname(configFilePath)
-    return replaceConfigTemplates(JSON.parse(fs.readFileSync(configFilePath)), configFolderPath)
-}
-
-global.replaceConfigTemplates = function(config, basePath) {
+function replaceConfigTemplates(config, subTemplates) {
     do {
-        global.configChanged = false
-        config = replaceUpperConfigTemplates(config, basePath)
+        this.configChanged = false
+        config = this.replaceUpperConfigTemplates(config, subTemplates)
     }
-    while (configChanged)
+    while (this.configChanged)
     return config
 }
-
-global.replaceUpperConfigTemplates = function(config, basePath) {
+function replaceUpperConfigTemplates(config, subTemplates) {
     if (Array.isArray(config)) {
+        let self = this
         return config.map(function(configValue) {
-            return replaceUpperConfigTemplates(configValue, basePath)
+            return self.replaceUpperConfigTemplates(configValue, subTemplates)
         })
     }
     else if (typeof(config) == 'object') {
-        if ('file_path' in config) {
-            return replaceTemplate(config, basePath)
+        if ('template_path' in config) {
+            return this.replaceTemplate(config)
         }
         else {
-            return replaceObjectTemplateProperties(config, basePath)
+            return this.replaceObjectTemplateProperties(config, subTemplates)
         }
     }
     else {
         return config
     }
 }
-
-function replaceObjectTemplateProperties(config, basePath) {
+function replaceObjectTemplateProperties(config, subTemplates) {
     for (const [key, value] of Object.entries(config)) {
         if (value == null) {
             config[key] = null
         }
         else if (Array.isArray(value)) {
+            let self = this
             config[key] = value.map(function(configValue) {
-                return replaceUpperConfigTemplates(configValue, basePath)
+                return self.replaceUpperConfigTemplates(configValue, subTemplates)
             })
         }
         else if (typeof(value) == 'object') {
-            if ('file_path' in value) {
-                config[key] = replaceTemplate(value, basePath)
+            if ('template_path' in value) {
+                config[key] = this.replaceTemplate(value, subTemplates)
             }
             else {
-                config[key] = replaceUpperConfigTemplates(value, basePath)
+                config[key] = this.replaceUpperConfigTemplates(value, subTemplates)
             }
         }
     }
     return config
 }
-
-function replaceTemplate(config, basePath) {
-    let templateConfig = JSON.parse(fs.readFileSync(path.join(basePath, config.file_path)))
+function replaceTemplate(config, subTemplates) {
+    let templateConfig = getObjectSubProperty(subTemplates, config.template_path)
     if ('params' in config) {
         do {
-            paramChanged = false
-            templateConfig = replaceTemplateParams(templateConfig, config.params)
-        } while (paramChanged)
+            this.paramChanged = false
+            templateConfig = this.replaceTemplateParams(templateConfig, config.params)
+        } while (this.paramChanged)
     }
-    global.configChanged = true
+    this.configChanged = true
     return templateConfig
 }
-
-function replaceTemplateParams(templateConfig, params) {
-    if (Array.isArray(templateConfig)) {
-        let arrayConfigValue = []
-        templateConfig.forEach(function(configValue) {
-            if (Array.isArray(configValue)) {
-                arrayConfigValue.push(replaceTemplateParams(configValue, params))
-            }
-            else if (typeof configValue == 'object') {
-                if ('array_data' in configValue) {
-                    let mergeToParent = configValue.merge_to_parent
-                    let arrayData = createArrayConfig(configValue, params[configValue.array_data], configValue.array_data)
-                    if (mergeToParent) {
-                        arrayConfigValue = arrayConfigValue.concat(arrayData)
-                    }
-                    else {
-                        arrayConfigValue.push(arrayData)
-                    }
-                }
-                else {
-                    arrayConfigValue.push(replaceTemplateParams(configValue, params))
-                }
+function replaceTemplateParams(template, params) {
+    if (template == null) {
+        return null
+    }
+    else if (Array.isArray(template)) {
+        let arrayTemplate = []
+        let self = this
+        template.forEach(function (templateValue) {
+            let replacedTemplateValue = self.replaceTemplateParams(templateValue, params)
+            if (typeof templateValue == 'object' && 'array_data' in templateValue && templateValue.merge_to_parent) {
+                arrayTemplate = arrayTemplate.concat(replacedTemplateValue)
             }
             else {
-                arrayConfigValue.push(configValue)
+                arrayTemplate.push(replacedTemplateValue)
             }
         })
-        return arrayConfigValue
+        return arrayTemplate
     }
-    else if (typeof(templateConfig) == 'object') {
-        for (const [key, value] of Object.entries(templateConfig)) {
-            if (Array.isArray(value)) {
-                templateConfig[key] = replaceTemplateParams(value, params)
-            }
-            else if (typeof(value) == 'object') {
-                if (value == null) {
-                    templateConfig[key] = null
-                }
-                else if ('array_data' in value) {
-                    templateConfig[key] = createArrayConfig(value, params[value.array_data], value.array_data)
-                }
-                else {
-                    templateConfig[key] = getConfigValue(value, params)
-                }
-            }
-            else {
-                templateConfig[key] = getConfigValue(value, params)
-            }
+    else if (typeof(template) == 'object') {
+        if ('array_data' in template) {
+            return this.createArrayTemplate(template, params[template.array_data], template.array_data)
         }
-        return templateConfig
+        else {
+            let replaceTemplate = JSON.parse(JSON.stringify(template))
+            for (const [key, value] of Object.entries(replaceTemplate)) {
+                replaceTemplate[key] = this.replaceTemplateParams(value, params)
+            }
+            return replaceTemplate
+        }
     }
     else {
-        return templateConfig
+        return this.getTemplateValue(template, params)
     }
 }
-
-function createArrayConfig(config, arrayParam, arrayParamName) {
-    delete config.array_data
-    delete config.merge_to_parent
+function createArrayTemplate(template, arrayParam, arrayParamName) {
+    let replaceTemplate = JSON.parse(JSON.stringify(template))
+    delete replaceTemplate.array_data
+    delete replaceTemplate.merge_to_parent
+    let self = this
     return arrayParam.map(function(param) {
         let configParam = {}
         configParam[arrayParamName] = param
-        return replaceTemplateParams(JSON.parse(JSON.stringify(config)), configParam)
+        return self.replaceTemplateParams(replaceTemplate, configParam)
     })
 }
-
-function getConfigValue(value, params) {
+function getTemplateValue(value, params) {
     if (typeof value == 'string') {
         if (value.indexOf('++') == 0) {
             let valueToCheck = value.substring(2)
             let replacedValue = getObjectSubProperty(params, valueToCheck, value)
             if (replacedValue != value) {
-                paramChanged = true
+                this.paramChanged = true
             }
             return replacedValue
         }
@@ -170,63 +118,6 @@ function getConfigValue(value, params) {
         }
     }
     else {
-        return replaceTemplateParams(value, params)
+        return value
     }
-}
-
-global.changeConfig = function(config, newValues) {
-    if ('type' in config && 'data' in config && Object.entries(config).length == 2) {
-        changeConfig(config.data, newValues)
-    }
-    else {
-        for (const [key, newValue] of Object.entries(newValues)) {
-            if (key in config && !Array.isArray(newValues[key])) {
-                if (Array.isArray(config[key])) {
-                    for (let i = 0; i < config[key].length; ++i) {
-                        changeConfigValue(config[key], i, newValue)
-                    }
-                }
-                else {
-                    changeConfigValue(config, key, newValue)
-                }
-            }
-            else {
-                config[key] = newValue
-            }
-        }
-    }
-}
-
-function changeConfigValue(objectToChange, propertyName, newValue) {
-    if (typeof(newValue) == 'object') {
-        changeConfig(objectToChange[propertyName], newValue)
-    }
-    else {
-        objectToChange[propertyName] = newValue
-    }
-}
-
-global.createConfig = function(aliases, newValues, template) {
-    for (const [keyToChange, newValue] of Object.entries(newValues)) {
-        if (keyToChange in aliases) {
-            changeTemplateValue(template, aliases[keyToChange], newValue)
-        }
-        else {
-            throw new InvalidConfigAliasError(key, aliases)
-        }
-    }
-}
-
-function changeTemplateValue(template, alias, newValue) {
-    let propertyNames = alias.split('.')
-    let propertyToChange = template
-    for (let i = 0; i < propertyNames.length - 1; ++i) {
-        if (propertyNames[i] in propertyToChange) {
-            propertyToChange = propertyToChange[propertyNames[i]]
-        }
-        else {
-            throw new InvalidConfigTemplateError(template, alias)
-        }
-    }
-    propertyToChange[propertyNames[propertyNames.length - 1]] = newValue
 }

@@ -1,4 +1,44 @@
 require('./objectMethods')
+const ComponentPropertyInfos = require('./ComponentPropertyInfos')
+
+window.componentProperties = {}
+global.getComponentPropertyInfos = (componentTypeName) => {
+    const properties = copyProperties(componentTypeName)
+    return new ComponentPropertyInfos(componentTypeName, properties)
+}
+
+global.registerVueComponent = (componentName, requiredComponent, Vue) => {
+    let properties = Vue.extend(requiredComponent).options.props
+    if (properties) {
+        window.componentProperties[componentName] = properties
+    }
+    Vue.component(componentName, requiredComponent)
+}
+
+global.isSectionPropertyName = (propertyName) => {
+    return propertyName.endsWith('section') || propertyName.endsWith('sections')
+}
+
+global.copyProperties = componentName => {
+    let properties = window.componentProperties[componentName]
+    if (properties) {
+        let copiedProperties = JSON.parse(JSON.stringify(properties))
+        Object.keys(properties).forEach(propertyName => {
+            let property = properties[propertyName]
+            let copiedProperty = copiedProperties[propertyName]
+            let copiedPropertyValueNames = Object.keys(copiedProperty)
+            Object.keys(property).forEach(propertyValueName => {
+                if (!copiedPropertyValueNames.includes(propertyValueName)) {
+                    copiedProperty[propertyValueName] = property[propertyValueName]
+                }
+            })
+        })
+        return copiedProperties
+    }
+    else {
+        return null
+    }
+}
 
 global.addIdToConfigArrays = function(config) {
     for (const [key, value] of Object.entries(config)) {

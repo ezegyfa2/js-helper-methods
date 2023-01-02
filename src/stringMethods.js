@@ -8,3 +8,10 @@ global.isEmptyString = function(text) {
 	else
 		return text == ''
 }
+
+Object.defineProperty(String.prototype, 'toUppercaseFirstLetter', {
+	value: function() {
+		return this.charAt(0).toUpperCase() + this.slice(1)
+	},
+	enumerable: false
+})
