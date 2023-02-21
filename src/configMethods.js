@@ -7,14 +7,6 @@ global.getComponentPropertyInfos = (componentTypeName) => {
     return new ComponentPropertyInfos(componentTypeName, properties)
 }
 
-global.registerVueComponent = (componentName, requiredComponent, Vue) => {
-    let properties = Vue.extend(requiredComponent).options.props
-    if (properties) {
-        window.componentProperties[componentName] = properties
-    }
-    Vue.component(componentName, requiredComponent)
-}
-
 global.isSectionPropertyName = (propertyName) => {
     return propertyName.endsWith('section') || propertyName.endsWith('sections')
 }

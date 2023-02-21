@@ -5,3 +5,11 @@ global.refreshVueComponents = () => {
         } 
     })
 }
+
+global.registerVueComponent = (componentName, requiredComponent, Vue) => {
+    let properties = Vue.extend(requiredComponent).options.props
+    if (properties) {
+        window.componentProperties[componentName] = properties
+    }
+    Vue.component(componentName, requiredComponent)
+}
