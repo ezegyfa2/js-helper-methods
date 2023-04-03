@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ezegyfa2/js-helper-methods/issues"
   },
-  "homepage": "https://github.com/ezegyfa2/js-helper-methods#readme"
+  "homepage": "https://github.com/ezegyfa2/js-helper-methods#readme",
+  "dependencies": {
+    "sha256": "^0.2.0"
+  }
 }

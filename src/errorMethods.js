@@ -1,23 +1,26 @@
 checkGlobalNameIsOccupied('invalidVariableTypeError')
 
 global.invalidVariableTypeError = function(variableToCheck, variableName, expectedTypeName) {
-	if (typeof variableName != 'string')
-		if (typeof expectedTypeName != 'string')
-			return new Error(
-				'Invalid type for variable. The current type is ' + typeof variableToCheck + 
-				' (invalid error parameters: variableName, expectedTypeName).'
-			)
-		else
-			return new Error(
-				'Invalid type for variable ' + 
-				'. The expected type is ' + expectedTypeName + 
-				' and the current type is ' + typeof variableToCheck + 
-				' (invalid error parameters: variableName).'
-			)
-	else
-		return new Error(
-			'Invalid type for variable ' + variableName + 
-			'. The expected type is ' + expectedTypeName + 
-			' and the current type is ' + typeof variableToCheck + '.'
-		)
+	let variableNameMessage = ''
+	let variableTypeMessage = ''
+	let invalidParameterNames = []
+	if (typeof variableName == 'string') {
+		variableNameMessage = ' ' + variableName
+		variableTypeMessage = ', current type: ' + typeof variableToCheck
+	}
+	else {
+		invalidParameterNames.push('variableName')
+	}
+	let expectedTypeNameMessage = ''
+	if (typeof expectedTypeName == 'string') {
+		expectedTypeNameMessage = ', expected type: ' + expectedTypeName
+	}
+	else {
+		invalidParameterNames.push('expectedTypeName')
+	}
+	let invalidParametersMessage = ''
+	if (invalidParameterNames.length > 0) {
+		invalidParametersMessage = ', invalid error parameters: ' + concatenateStrings(invalidParameterNames, ', ')
+	}
+	return 'Invalid type for variable' + variableNameMessage + variableTypeMessage + expectedTypeNameMessage + invalidParametersMessage
 }

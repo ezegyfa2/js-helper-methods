@@ -15,3 +15,11 @@ Object.defineProperty(String.prototype, 'toUppercaseFirstLetter', {
 	},
 	enumerable: false
 })
+
+global.concatenateStrings = function(stringsToConcatenate, concatenator) {
+	result = ''
+	stringsToConcatenate.forEach(stringToConcatenate => {
+		result += stringToConcatenate + concatenator
+	})
+	return result.substr(0, result.length - concatenator.length)
+}

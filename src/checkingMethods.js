@@ -23,6 +23,11 @@ global.checkObjectHasProperty = function(objectToCheck, propertyName) {
 global.checkVariableType = function(variableToCheck, variableName, expectedTypeName) {
 	if (typeof expectedTypeName != 'string')
 		throw new Error('Invalid expectedTypeName ' + JSON.stringify(expectedTypeName))
+	else if (expectedTypeName == 'array') {
+		if (!Array.isArray(variableToCheck)) {
+			throw invalidVariableTypeError(variableToCheck, variableName, expectedTypeName)
+		}
+	}
 	else if (typeof variableToCheck !== expectedTypeName)
 		throw invalidVariableTypeError(variableToCheck, variableName, expectedTypeName)
 }

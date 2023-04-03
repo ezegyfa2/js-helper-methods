@@ -8,3 +8,4 @@ global.executeAfterCondition = function(functionToExecute, conditionFunction) {
         }
     }, 100)
 }
+global.sha256 = require('sha256')

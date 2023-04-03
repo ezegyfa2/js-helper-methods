@@ -1,4 +1,4 @@
-class Waiter {
+global.Waiter = class Waiter {
 	constructor(millisecForWait) {
 		checkVariableType(millisecForWait, 'millisecForWait', 'number')
 		this.millisecForWait = millisecForWait
@@ -6,11 +6,9 @@ class Waiter {
 	}
 
 	resetAndExecute(functionToExecute) {
-		checkVariableType(functionToExecute, 'functionToExecute', 'function')
 		clearTimeout(this.timeout)
-		this.timeout = setTimeout(function() {
+		this.timeout = setTimeout(() => {
 			functionToExecute()
-		}, this.millisecForWait);
+		}, this.millisecForWait)
 	}
 }
-module.exports = Waiter
