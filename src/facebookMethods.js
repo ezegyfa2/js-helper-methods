@@ -20,7 +20,7 @@ global.getFacebookAPIData = function(eventName, eventId, userEmail, customData) 
     if (userEmail) {
         apiData.data[0].user_data = {
             em: [
-                userEmail
+                sha256(userEmail)
             ],
             ph: [
                 null

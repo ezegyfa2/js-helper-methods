@@ -23,3 +23,17 @@ global.concatenateStrings = function(stringsToConcatenate, concatenator) {
 	})
 	return result.substr(0, result.length - concatenator.length)
 }
+
+
+
+global.shortString = (text, maxLength) => {
+	if (!maxLength) {
+		maxLength = 50
+	}
+	if (text.length > maxLength) {
+		return text.substr(0, maxLength, 'UTF-8') + '...'
+	}
+	else {
+		return text
+	}
+}
