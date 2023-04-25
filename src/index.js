@@ -1,3 +1,5 @@
+global.sha256 = require('sha256')
+
 require('./checkingMethods')
 require('./errorMethods')
 require('./stringMethods')
