@@ -66,7 +66,6 @@ class ComponentPropertyInfos {
             return 'web-designer-section-input'
         }
         else if (property.itemType) {
-            console.log(property)
             return this.getFormInfoType(property.itemType)
         }
         else {
