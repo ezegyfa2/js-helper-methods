@@ -1,3 +1,5 @@
+require('./objectMethods')
+
 function replaceConfigTemplates(config, subTemplates) {
     do {
         this.configChanged = false
