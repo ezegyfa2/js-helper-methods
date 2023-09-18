@@ -1,3 +1,5 @@
+window.addRequiredPackage('jquery')
+
 global.sendFacebookAPIEvent = function(eventName, eventId, userEmail, customData) {
     return $.post({
         url: 'https://graph.facebook.com/v16.0/' + window.facebookPixelId + '/events?access_token=' + window.facebookAccessToken,
