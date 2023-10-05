@@ -91,3 +91,23 @@ global.getType = name => {
             throw new Error('Invalid type name: ' + name)
     }
 }
+
+collectObjectValuesRecursively = objectToCheck => {
+    if (Array.isArray(objectToCheck)) {
+        let collectedValues = [];
+        objectToCheck.forEach(objectValue => {
+            collectedValues.push(...collectObjectValuesRecursively(objectValue))
+        })
+        return collectedValues
+    }
+    else if (objectToCheck && typeof objectToCheck == "object") {
+        let collectedValues = []
+        for (const [ key, value ] of Object.entries(objectToCheck)) {
+            collectedValues.push(...collectObjectValuesRecursively(value))
+        }
+        return collectedValues
+    }
+    else {
+        return [ objectToCheck ]
+    }
+}
