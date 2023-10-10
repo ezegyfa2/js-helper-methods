@@ -1,3 +1,4 @@
+// comment
 global.checkGlobalNameIsOccupied = function(...namesToCheck) {
 	for (var i = 0; i < namesToCheck.length; i++)
 		if (namesToCheck[i] in global)
