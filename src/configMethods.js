@@ -96,8 +96,6 @@ function replaceObjectTemplateProperties(config) {
 }
 
 function replaceTemplate(config) {
-    console.log(global.templates)
-    console.log(config.template_path)
     let templateConfig = getObjectSubProperty(global.templates, config.template_path)
     if ('params' in config) {
         do {

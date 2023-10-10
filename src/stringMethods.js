@@ -1,5 +1,3 @@
-checkGlobalNameIsOccupied('isEmptyString')
-
 global.isEmptyString = function(text) {
 	if (text === null)
 		return true
@@ -24,7 +22,29 @@ global.concatenateStrings = function(stringsToConcatenate, concatenator) {
 	return result.substr(0, result.length - concatenator.length)
 }
 
-
+Object.defineProperty(String.prototype, 'splitToFullParts', {
+	value: function(splitter, partCount) {
+		if (partCount > 0) {
+			const textParts = this.split(splitter)
+			if (textParts.length <= partCount) {
+				return textParts
+			}
+			else {
+				let result = []
+				for (let i = 0; i < partCount - 1; ++i) {
+					result.push(textParts[i])
+				}
+				const lastPart = textParts.slice(partCount - 1).join(splitter)
+				result.push(lastPart)
+				return result
+			}
+		}
+		else {
+			throw new Error('Invalid part count: ' + partCount)
+		}
+	},
+	enumerable: false
+})
 
 global.shortString = (text, maxLength) => {
 	if (!maxLength) {

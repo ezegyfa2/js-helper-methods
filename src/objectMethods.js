@@ -53,7 +53,7 @@ global.getObjectSubProperty = function(parent, propertyPath, defaultValue) {
     let propertyNames = propertyPath.split('.')
     let property = parent
     for (const propertyName of propertyNames) {
-        if (property && propertyName in property) {
+        if (property && typeof(property) == 'object' && propertyName in property) {
             property = property[propertyName]
         }
         else {
