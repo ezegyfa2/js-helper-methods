@@ -1,5 +1,3 @@
-checkGlobalNameIsOccupied('alignHeights')
-
 global.alignHeightsBySelector = function(selector) {
     alignHeights(Array.from(document.querySelectorAll(selector)))
 }
