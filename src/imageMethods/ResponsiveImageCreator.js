@@ -15,7 +15,6 @@ class ResponsiveImageCreator {
     async createResponsiveVersions(imagePath, imageOptions, outputFolderPath) {
         for (let imageOption of imageOptions) {
             let currentOptions = this.getOptions(imageOption)
-            console.log('current', currentOptions)
             if (typeof(imageOption) == 'object') {
                 if (imageOption.width) {
                     currentOptions.width = imageOption.width
@@ -137,7 +136,6 @@ class ResponsiveImageCreator {
     
     getOptions(imageOption) {
         if (typeof(imageOption) == 'object' && this.options) {
-            console.log('options', this.options)
             for (let [key, value] of Object.entries(this.options)) {
                 console.log('value2', key, value, imageOption)
                 if (!(key in imageOption)) {
@@ -146,6 +144,9 @@ class ResponsiveImageCreator {
                 }
             }
             return imageOption
+        }
+        else if (this.options) {
+            return JSON.parse(JSON.stringify(this.options))
         }
         else {
             return {}

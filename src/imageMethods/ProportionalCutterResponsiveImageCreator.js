@@ -4,9 +4,6 @@ const CutterResponsiveImageCreator = require('./CutterResponsiveImageCreator')
 class ProportionalCutterResponsiveImageCreator extends CutterResponsiveImageCreator {
     constructor(options) {
         super(options)
-        if (!this.options.fit) {
-            this.options.fit = sharp.fit.cover
-        }
     }
 
     async getHeight(imagePath, currentOptions) {
