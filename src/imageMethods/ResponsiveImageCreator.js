@@ -10,6 +10,7 @@ class ResponsiveImageCreator {
         else {
             this.options = {};
         }
+        this.options.resize = true
     }
 
     async createResponsiveVersions(imagePath, imageOptions, outputFolderPath) {
@@ -46,82 +47,101 @@ class ResponsiveImageCreator {
     
     async resizeImage(imagePath, outputImagePath, options) {
         let image = sharp(imagePath)
-        const extractOptions = await this.getExtractOptions(image, options)
-        if (extractOptions) {
-            console.log('extra', extractOptions)
-            image.extract(extractOptions)
-        }
         console.log(imagePath, outputImagePath, options)
-        if (!fs.existsSync(path.dirname(outputImagePath))){
+        if (!fs.existsSync(path.dirname(outputImagePath))) {
             fs.mkdirSync(path.dirname(outputImagePath), { recursive: true });
         }
-        image.resize(options)
-            .webp()
+        if (this.getExtractOption(options)) {
+            const extractOptions = await this.getExtractOptions(image, options)
+            console.log('options', extractOptions)
+            image.extract(extractOptions)
+        }
+        if (options.resize) {
+            image.resize(options)
+        }
+        image.webp()
             .toFile(outputImagePath, (error, info) => { 
                 if (error) {
-                    console.error(error) 
+                    console.error(error)
                 }
                 else {
                     //console.log(info)
                 }
             })
     }
+
+    getExtractOption(options) {
+        return options.extract || 'top' in options || 'bottom' in options || 'left' in options || 'right' in options
+    }
     
     async getExtractOptions(image, options) {
-        if (options.top || options.bottom || options.left || options.right) {
-            let extractOptions = {}
-            const metadata = await image.metadata()
-            let hasPosition = options.position
-            if (options.left) {
-                extractOptions.left = options.left
-                extractOptions.width = metadata.width - extractOptions.left
-                if (!hasPosition) {
-                    options.position = 'left'
-                }
+        let extractOptions = {}
+        const metadata = await image.metadata()
+        let hasPosition = options.position
+        if ('left' in options) {
+            extractOptions.left = options.left
+            extractOptions.width = this.getExtractSize(options, metadata.width, options.width, extractOptions.left)
+            if (!hasPosition) {
+                options.position = 'left'
             }
-            else if (options.right) {
-                extractOptions.left = 0
-                extractOptions.width = metadata.width - extractOptions.right
-                if (!hasPosition) {
-                    options.position = 'right'
-                }
+        }
+        else if ('right' in options) {
+            extractOptions.left = 0
+            extractOptions.width = this.getExtractSize(options, metadata.width, options.width, extractOptions.right)
+            if (!hasPosition) {
+                options.position = 'right'
             }
-            else {
-                extractOptions.left = 0
-                extractOptions.width = metadata.width
-                if (!hasPosition) {
-                    options.position = ''
-                }
-            }
-            if (options.width > extractOptions.width) {
-                options.width = extractOptions.width
-            }
-            if (options.top) {
-                extractOptions.top = options.top
-                extractOptions.height = metadata.height - extractOptions.top
-                if (!hasPosition) {
-                    options.position += ' top'
-                }
-            }
-            else if (options.bottom) {
-                extractOptions.top = 0
-                extractOptions.height = metadata.height - extractOptions.bottom
-                if (!hasPosition) {
-                    options.position += ' bottom'
-                }
-            }
-            else {
-                extractOptions.top = 0
-                extractOptions.height = metadata.height
-            }
-            if (options.height > extractOptions.height) {
-                options.height = extractOptions.height
-            }
-            console.log(extractOptions)
-            return extractOptions
         }
         else {
-            return null
+            if (options.resize) {
+                extractOptions.left = 0
+            }
+            else {
+                extractOptions.left = parseInt((metadata.width - options.width) / 2)
+            }
+            extractOptions.width = this.getExtractSize(options, metadata.width, options.width, 0)
+            if (!hasPosition) {
+                options.position = ''
+            }
+        }
+        if (options.width > extractOptions.width) {
+            options.width = extractOptions.width
+        }
+        if ('top' in options) {
+            extractOptions.top = options.top
+            extractOptions.height = this.getExtractSize(options, metadata.height, options.height, extractOptions.top)
+            if (!hasPosition) {
+                options.position += ' top'
+            }
+        }
+        else if ('bottom' in options) {
+            extractOptions.top = 0
+            extractOptions.height = this.getExtractSize(options, metadata.height, options.height, extractOptions.bottom)
+            if (!hasPosition) {
+                options.position += ' bottom'
+            }
+        }
+        else {
+            if (options.resize) {
+                extractOptions.top = 0
+            }
+            else {
+                extractOptions.top = parseInt((metadata.height - options.height) / 2)
+            }
+            extractOptions.height = this.getExtractSize(options, metadata.height, options.height, 0)
+        }
+        if (options.height > extractOptions.height) {
+            options.height = extractOptions.height
+        }
+        return extractOptions
+    }
+
+    getExtractSize(options, imageSize, optionSize, optionPosition) {
+        if (options.resize) {
+            return imageSize - optionPosition
+        }
+        else {
+            return optionSize
         }
     }
 
@@ -137,9 +157,7 @@ class ResponsiveImageCreator {
     getOptions(imageOption) {
         if (typeof(imageOption) == 'object' && this.options) {
             for (let [key, value] of Object.entries(this.options)) {
-                console.log('value2', key, value, imageOption)
                 if (!(key in imageOption)) {
-                    console.log('value', key, value)
                     imageOption[key] = value
                 }
             }
@@ -154,4 +172,4 @@ class ResponsiveImageCreator {
     }
 }
 
-module.exports = ResponsiveImageCreator;
+module.exports = ResponsiveImageCreator

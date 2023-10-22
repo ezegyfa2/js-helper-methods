@@ -1,7 +1,7 @@
 const sharp = require('sharp')
-const CutterResponsiveImageCreator = require('./CutterResponsiveImageCreator')
+const CutterResizer = require('./CutterResizer')
 
-class ProportionalCutterResponsiveImageCreator extends CutterResponsiveImageCreator {
+class ProportionalCutterResizer extends CutterResizer {
     constructor(options) {
         super(options)
     }
@@ -13,4 +13,4 @@ class ProportionalCutterResponsiveImageCreator extends CutterResponsiveImageCrea
     }
 }
 
-module.exports = ProportionalCutterResponsiveImageCreator;
+module.exports = ProportionalCutterResizer;
